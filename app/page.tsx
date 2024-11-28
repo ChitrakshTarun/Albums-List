@@ -3,18 +3,24 @@ import { useEffect, useState } from "react";
 
 const IndexPage = () => {
   const [albums, setAlbums] = useState([]);
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchAlbums = async () => {
       try {
         const response = await fetch("/api/fetch-albums");
-        if (!response.ok) throw new Error("Failed to fetch albums");
+        if (!response.ok) {
+          throw new Error("Failed to fetch albums");
+        }
         const data = await response.json();
         setAlbums(data);
-      } catch (err) {
-        setError(err.message);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("An unknown error occurred");
+        }
       } finally {
         setLoading(false);
       }
@@ -22,7 +28,6 @@ const IndexPage = () => {
 
     fetchAlbums();
   }, []);
-
   return (
     <div className="flex flex-1 flex-col mx-8">
       <p className="text-center text-5xl py-16">this will be styled better.</p>
