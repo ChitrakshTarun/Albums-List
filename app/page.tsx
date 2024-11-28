@@ -1,8 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
+import { Album } from "@/utils/types/albums";
 
 const IndexPage = () => {
-  const [albums, setAlbums] = useState([]);
+  const [albums, setAlbums] = useState<Album[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
