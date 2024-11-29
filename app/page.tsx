@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Album } from "@/utils/types/albums";
+import { Album } from "@/types/albums";
 
 const IndexPage = () => {
   const [albums, setAlbums] = useState<Album[]>([]);
