@@ -1,9 +1,9 @@
 "use server";
 import { db } from "@/db/drizzle";
+import { asc } from "drizzle-orm";
 import { albums } from "@/db/schema";
-import { eq, asc } from "drizzle-orm";
 
-export const getAlbumNames = async () => {
+export const getAllAlbums = async () => {
   const data = await db
     .select({
       id: albums.id,
@@ -15,9 +15,4 @@ export const getAlbumNames = async () => {
     .from(albums)
     .orderBy(asc(albums.artistName), asc(albums.releaseDate));
   return data;
-};
-
-export const getAlbumById = async (id: string) => {
-  const [album] = await db.select().from(albums).where(eq(albums.id, id));
-  return album;
 };
