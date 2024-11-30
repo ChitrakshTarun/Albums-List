@@ -12,8 +12,8 @@ const IndexPage = async () => {
           <p className="text-center text-2xl py-4">{`Fevenir's Albums List - ${albums.length} Albums`}</p>
           <ul>
             {albums.map((album, index) => (
-              <li key={index}>
-                {index + 1} - {album.name} ({album.artistName})
+              <li key={index} className="flex flex-row">
+                <p>{`${index + 1} - ${album.name} (${album.artistName})`}</p>
               </li>
             ))}
           </ul>
