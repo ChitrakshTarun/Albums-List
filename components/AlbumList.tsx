@@ -2,24 +2,36 @@ import { getAllAlbums } from "@/db/actions/albumsAction";
 import React from "react";
 import { AlbumCard } from "./ui/AlbumCard";
 
-const AlbumList = async () => {
+interface AlbumListProps {
+  layout?: "list" | "grid";
+}
+
+const AlbumList = async ({ layout = "list" }: AlbumListProps) => {
   const albums = await getAllAlbums();
+
   return (
     <div>
       <p className="text-center text-4xl py-4">{`Fevenir's Albums List`}</p>
       <p className="text-center text-xl pb-16">{`The following is the list of the ${albums.length} albums I have heard.\nThis website is to be updated and styled further.`}</p>
 
-      <ul>
+      <div
+        className={
+          layout === "grid"
+            ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 gap-4"
+            : "space-y-4"
+        }
+      >
         {albums.map((album, index) => (
           <AlbumCard
-            index={index}
             key={album.id}
+            index={layout === "list" ? index : undefined}
             name={album.name!}
             artistName={album.artistName!}
             artworkUrl={album.artworkUrl!}
+            layout={layout}
           />
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
