@@ -5,7 +5,7 @@ const IndexPage = async () => {
   const albums = await getAlbumNames();
 
   return (
-    <div className="flex flex-1 flex-col mx-8">
+    <div className="flex flex-1 flex-col mx-4 lg:mx-8">
       {albums && (
         <div>
           <p className="text-center text-4xl py-4">{`Fevenir's Albums List`}</p>

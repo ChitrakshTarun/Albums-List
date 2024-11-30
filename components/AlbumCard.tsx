@@ -11,7 +11,7 @@ interface AlbumCardProps {
 export const AlbumCard = ({ index, name, artistName, artworkUrl }: AlbumCardProps) => {
   return (
     <div className="flex flex-row gap-4 pb-4 items-center">
-      <div className="w-16 text-xl text-center">
+      <div className="w-8 lg:w-16 text-xl text-center">
         <p>{index + 1}</p>
       </div>
       <div>
