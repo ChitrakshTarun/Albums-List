@@ -35,8 +35,8 @@ export const AlbumCard = ({ index, name, artistName, artworkUrl, layout = "list"
         />
       </div>
       <div className={`flex flex-1 flex-col min-w-0 ${layout === "grid" ? "p-4" : ""}`}>
-        <p className={`text-xl truncate ${layout === "grid" ? "text-center" : ""}`}>{name}</p>
-        <p className={`text-red-500 ${layout === "grid" ? "text-center" : ""}`}>{artistName}</p>
+        <p className={`truncate ${layout === "grid" ? "text-center text-lg" : "text-xl"}`}>{name}</p>
+        <p className={`truncate text-red-500 ${layout === "grid" ? "text-center text-md" : ""}`}>{artistName}</p>
       </div>
     </div>
   );

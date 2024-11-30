@@ -12,7 +12,7 @@ const AlbumList = async ({ layout = "list" }: AlbumListProps) => {
   return (
     <div>
       <p className="text-center text-4xl py-4">{`Fevenir's Albums List`}</p>
-      <p className="text-center text-xl pb-16">{`The following is the list of the ${albums.length} albums I have heard.\nThis website is to be updated and styled further.`}</p>
+      <p className="text-center text-xl pb-16">{`I have listened to ${albums.length} music albums - so I decided to build a website listing them all.`}</p>
 
       <div
         className={
