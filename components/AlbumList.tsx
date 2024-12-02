@@ -1,6 +1,6 @@
-import { getAllAlbums } from "@/db/actions/albumsAction";
 import React from "react";
-import { AlbumCard } from "./ui/AlbumCard";
+import { AlbumCard } from "@/components/ui/AlbumCard";
+import { getAllAlbums } from "@/db/actions/albumsAction";
 
 interface AlbumListProps {
   layout?: "list" | "grid";
@@ -12,7 +12,7 @@ const AlbumList = async ({ layout = "list" }: AlbumListProps) => {
   return (
     <div>
       <p className="text-center text-4xl py-4">{`Fevenir's Albums List`}</p>
-      <p className="text-center text-xl pb-16">{`I have listened to ${albums.length} music albums - so I decided to build a website listing them all.`}</p>
+      <p className="text-center text-xl pb-16">{`I've listened to ${albums.length} music albums - so I decided to create a website to track them all.`}</p>
 
       <div
         className={

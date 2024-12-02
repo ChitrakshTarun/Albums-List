@@ -1,6 +1,6 @@
 import AlbumList from "@/components/AlbumList";
 
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 
 const IndexPage = async () => {
   return (
