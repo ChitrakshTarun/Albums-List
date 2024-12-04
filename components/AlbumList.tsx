@@ -26,7 +26,8 @@ const AlbumList = async ({ layout = "list" }: AlbumListProps) => {
             key={album.id}
             index={layout === "list" ? index : undefined}
             name={album.name!}
-            artistName={album.artistName!}
+            artistName={album.artistName}
+            genreName={album.genreNames}
             artworkUrl={album.artworkUrl!}
             layout={layout}
           />

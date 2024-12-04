@@ -1,7 +1,7 @@
 export type Album = {
   id: string;
   name: string;
-  artist_name: string;
+  artist_name: string[];
   release_date: string;
   url: string;
   track_count: number;
