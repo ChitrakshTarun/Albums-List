@@ -4,7 +4,8 @@ import React from "react";
 interface AlbumCardProps {
   index?: number;
   name: string;
-  artistName: string;
+  artistName: string[];
+  genreName: string[];
   artworkUrl: string;
   layout?: "list" | "grid";
 }
@@ -36,7 +37,12 @@ export const AlbumCard = ({ index, name, artistName, artworkUrl, layout = "list"
       </div>
       <div className={`flex flex-1 flex-col min-w-0 ${layout === "grid" ? "p-4" : ""}`}>
         <p className={`truncate ${layout === "grid" ? "text-center text-lg" : "text-xl"}`}>{name}</p>
-        <p className={`truncate text-red-500 ${layout === "grid" ? "text-center text-md" : ""}`}>{artistName}</p>
+        <p className={`truncate text-red-500 ${layout === "grid" ? "text-center text-md" : ""}`}>
+          {artistName.join(", ")}
+        </p>
+        {/* <p className={`truncate text-red-500 ${layout === "grid" ? "text-center text-md" : ""}`}>
+          {genreName.join(", ")}
+        </p> */}
       </div>
     </div>
   );

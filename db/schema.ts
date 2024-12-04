@@ -3,7 +3,7 @@ import { pgTable, varchar, date, text, integer, boolean, jsonb, primaryKey } fro
 export const albums = pgTable("albums", {
   id: varchar("id", { length: 255 }).primaryKey(),
   name: varchar("name", { length: 255 }),
-  artistName: varchar("artist_name", { length: 255 }),
+  artistName: jsonb("artist_name"),
   releaseDate: date("release_date"),
   url: text("url"),
   trackCount: integer("track_count"),
