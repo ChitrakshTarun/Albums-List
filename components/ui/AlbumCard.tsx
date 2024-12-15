@@ -40,9 +40,6 @@ export const AlbumCard = ({ index, name, artistName, artworkUrl, layout = "list"
         <p className={`truncate text-red-500 ${layout === "grid" ? "text-center text-md" : ""}`}>
           {artistName.join(", ")}
         </p>
-        {/* <p className={`truncate text-red-500 ${layout === "grid" ? "text-center text-md" : ""}`}>
-          {genreName.join(", ")}
-        </p> */}
       </div>
     </div>
   );
