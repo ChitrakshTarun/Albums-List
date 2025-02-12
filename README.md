@@ -1,6 +1,6 @@
 # Fevenir's Albums List
 
-I take my music very seriously.
+I listen to a lot of music albums as a hobby, so I decided to create a personal website where I can list and track them all.
 
 # Tech Stack
 
@@ -13,4 +13,4 @@ The Fevenir Albums List web app is a Next.js application. The following is the c
 - JavaScript/TypeScript
 - PostgreSQL (NeonDB)
 - Drizzle ORM
-- AceternityUI
+- ShadCN
