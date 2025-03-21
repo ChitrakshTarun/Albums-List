@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
+import Image from "next/image";
+import { usePlayback } from "@/providers/PlaybackProvider";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, Pause, ChevronDown, ChevronUp, SkipBack, SkipForward, X } from "lucide-react";
-import { usePlayback } from "@/providers/PlaybackProvider";
-import Image from "next/image";
 
 export default function PlaybackWidget() {
   const {
@@ -56,9 +56,7 @@ export default function PlaybackWidget() {
           isExpanded ? "rounded-t-2xl" : "rounded-lg shadow-lg p-2"
         }`}
       >
-        <motion.div
-          className={`flex ${isExpanded ? "flex-col items-center h-full p-4" : "justify-between items-center"}`}
-        >
+        <div className={`flex ${isExpanded ? "flex-col items-center h-full p-4" : "justify-between items-center"}`}>
           {isExpanded ? (
             <>
               <motion.button onClick={() => setIsExpanded(false)} className="self-end">
@@ -66,79 +64,69 @@ export default function PlaybackWidget() {
               </motion.button>
 
               {currentAlbumCover && (
-                <motion.div>
-                  <Image
-                    src={currentAlbumCover}
-                    alt={`Cover art for ${currentAlbumName}`}
-                    height={300}
-                    width={300}
-                    className="rounded-lg shadow-md mt-4"
-                  />
-                </motion.div>
+                <Image
+                  src={currentAlbumCover}
+                  alt={`Cover art for ${currentAlbumName}`}
+                  height={300}
+                  width={300}
+                  className="rounded-lg shadow-md mt-4"
+                />
               )}
 
-              <motion.h2 className="text-lg font-semibold text-white mt-2">
-                {currentTrackName || "No track selected"}
-              </motion.h2>
-              <motion.p className="text-sm text-gray-300">{currentAlbumName || "Unknown Album"}</motion.p>
+              <h2 className="text-lg font-semibold text-white mt-2">{currentTrackName || "No track selected"}</h2>
+              <p className="text-sm text-gray-300">{currentAlbumName || "Unknown Album"}</p>
 
-              <motion.div className="flex gap-4 mt-4">
-                <motion.button onClick={prevTrack} className="text-white p-2">
+              <div className="flex gap-4 mt-4">
+                <button onClick={prevTrack} className="text-white p-2">
                   <SkipBack size={24} />
-                </motion.button>
-                <motion.button onClick={togglePlayPause} className="text-white p-2">
+                </button>
+                <button onClick={togglePlayPause} className="text-white p-2">
                   {isPlaying ? <Pause size={24} /> : <Play size={24} />}
-                </motion.button>
-                <motion.button onClick={nextTrack} className="text-white p-2">
+                </button>
+                <button onClick={nextTrack} className="text-white p-2">
                   <SkipForward size={24} />
-                </motion.button>
-              </motion.div>
+                </button>
+              </div>
             </>
           ) : (
-            <motion.div layout className="flex items-center w-full justify-between p-2">
+            <div className="flex items-center w-full justify-between p-2">
               {currentAlbumCover && (
-                <motion.div layout>
-                  <Image
-                    src={currentAlbumCover}
-                    alt={`Cover art for ${currentAlbumName}`}
-                    height={50}
-                    width={50}
-                    className="rounded-lg shadow-md"
-                  />
-                </motion.div>
+                <Image
+                  src={currentAlbumCover}
+                  alt={`Cover art for ${currentAlbumName}`}
+                  height={50}
+                  width={50}
+                  className="rounded-lg shadow-md"
+                />
               )}
-              <motion.div layout className="flex flex-col flex-1 ml-2">
-                <motion.h2 layout className="text-sm font-semibold text-white">
-                  {currentTrackName || "No track selected"}
-                </motion.h2>
-                <motion.p layout className="text-xs text-gray-300">
-                  {currentAlbumName || "Unknown Album"}
-                </motion.p>
-              </motion.div>
-              <motion.div layout className="flex items-center gap-2">
-                <motion.button layout onClick={prevTrack} className="text-white p-1">
+              <div className="flex-col ml-2 w-0 flex-1">
+                <h2 className="truncate font-semibold text-white">{currentTrackName || "No track selected"}</h2>
+                <p className="truncate text-gray-300">{currentAlbumName || "Unknown Album"}</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <button onClick={prevTrack} className="text-white p-1">
                   <SkipBack size={20} />
-                </motion.button>
-                <motion.button layout onClick={togglePlayPause} className="text-white p-1">
+                </button>
+                <button onClick={togglePlayPause} className="text-white p-1">
                   {isPlaying ? <Pause size={20} /> : <Play size={20} />}
-                </motion.button>
-                <motion.button layout onClick={nextTrack} className="text-white p-1">
+                </button>
+                <button onClick={nextTrack} className="text-white p-1">
                   <SkipForward size={20} />
-                </motion.button>
-              </motion.div>
-              <motion.button layout onClick={() => setIsExpanded(true)} className="text-white ml-2">
+                </button>
+              </div>
+              <button onClick={() => setIsExpanded(true)} className="text-white ml-2">
                 <ChevronUp size={24} />
-              </motion.button>
-              <motion.button layout onClick={() => setIsVisible(false)} className="text-white ml-2">
+              </button>
+              <button onClick={() => setIsVisible(false)} className="text-white ml-2">
                 <X size={24} />
-              </motion.button>
-            </motion.div>
+              </button>
+            </div>
           )}
           <audio ref={audioRef} className="w-full">
             <source src={currentTrack} type="audio/mp4" />
             Your browser does not support the audio element.
           </audio>
-        </motion.div>
+        </div>
       </motion.div>
     </AnimatePresence>
   );

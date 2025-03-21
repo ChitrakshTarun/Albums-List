@@ -1,6 +1,6 @@
 "use client";
-import React, { createContext, useContext, useState, ReactNode, useRef } from "react";
-import { getAllAlbums } from "@/db/actions/albumsAction"; // Ensure correct path
+import { getAllAlbums } from "@/db/actions/albumsAction";
+import React, { createContext, useContext, useState, ReactNode, useRef, useEffect } from "react";
 
 interface Track {
   url: string | null;
@@ -42,11 +42,11 @@ export const PlaybackProvider = ({ children }: { children: ReactNode }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     console.log(currentIndex);
   }, [currentIndex]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     getAllAlbums().then((albums) => {
       const tracks = albums
         .filter((album) => album.firstSongUrl && album.firstSong)
