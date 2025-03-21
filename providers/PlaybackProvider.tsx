@@ -3,41 +3,53 @@ import React, { createContext, useContext, useState, ReactNode, useRef } from "r
 
 interface PlaybackContextType {
   currentTrack: string | null;
-  setTrack: (url: string | null) => void;
+  currentTrackName: string | null;
+  setTrack: (url: string | null, name: string | null) => void;
+  isPlaying: boolean;
+  togglePlayPause: () => void;
+  audioRef: React.RefObject<HTMLAudioElement>;
 }
 
 const PlaybackContext = createContext<PlaybackContextType | undefined>(undefined);
 
 export const PlaybackProvider = ({ children }: { children: ReactNode }) => {
   const [currentTrack, setCurrentTrack] = useState<string | null>(null);
+  const [currentTrackName, setCurrentTrackName] = useState<string | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const playTrack = (url: string | null) => {
+  const playTrack = (url: string | null, name: string | null) => {
     if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.load();
+      audioRef.current.pause(); // Stop previous track
+      audioRef.current.src = url || ""; // Reset the src to force reload
+      audioRef.current.load(); // Load new track
+      if (url) {
+        audioRef.current.play(); // Start playback
+        setIsPlaying(true);
+      } else {
+        setIsPlaying(false);
+      }
     }
     setCurrentTrack(url);
+    setCurrentTrackName(name);
+  };
+
+  const togglePlayPause = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
   };
 
   return (
-    <PlaybackContext.Provider value={{ currentTrack, setTrack: playTrack }}>
-      <div className="fixed top-0 left-0 w-full bg-black text-white p-4 z-50 flex items-center justify-between">
-        {currentTrack ? (
-          <audio ref={audioRef} controls autoPlay className="w-full">
-            <source src={currentTrack} type="audio/mp4" />
-            Your browser does not support the audio element.
-          </audio>
-        ) : (
-          <p className="text-center">Select a track to play</p>
-        )}
-        {currentTrack && (
-          <button onClick={() => playTrack(null)} className="ml-4 px-4 py-2 bg-red-500 rounded-lg">
-            Stop
-          </button>
-        )}
-      </div>
-      <div className="mt-20">{children}</div>
+    <PlaybackContext.Provider
+      value={{ currentTrack, currentTrackName, setTrack: playTrack, isPlaying, togglePlayPause, audioRef }}
+    >
+      {children}
     </PlaybackContext.Provider>
   );
 };

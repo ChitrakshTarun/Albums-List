@@ -9,11 +9,20 @@ interface AlbumCardProps {
   artistName: string[];
   genreName: string[];
   artworkUrl: string;
+  firstSong: string | null;
   firstSongUrl: string | null;
   layout?: "list" | "grid";
 }
 
-export const AlbumCard = ({ index, name, artistName, artworkUrl, firstSongUrl, layout = "list" }: AlbumCardProps) => {
+export const AlbumCard = ({
+  index,
+  name,
+  artistName,
+  artworkUrl,
+  firstSong,
+  firstSongUrl,
+  layout = "list",
+}: AlbumCardProps) => {
   const { setTrack } = usePlayback();
 
   return (
@@ -23,7 +32,7 @@ export const AlbumCard = ({ index, name, artistName, artworkUrl, firstSongUrl, l
           ? "flex flex-row gap-4 items-center bg-white/5 p-4 rounded-lg hover:bg-white/10 transition-colors duration-300"
           : "bg-white/5 rounded-lg overflow-hidden hover:bg-white/10 transition-colors duration-300"
       }`}
-      onClick={() => firstSongUrl && setTrack(firstSongUrl)}
+      onClick={() => firstSongUrl && setTrack(firstSongUrl, firstSong)}
     >
       {layout === "list" && (
         <div className="w-8 lg:w-16 text-xl text-center flex-shrink-0">
