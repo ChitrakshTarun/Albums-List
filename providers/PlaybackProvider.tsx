@@ -5,14 +5,24 @@ import { getAllAlbums } from "@/db/actions/albumsAction"; // Ensure correct path
 interface Track {
   url: string | null;
   name: string | null;
+  albumCover: string | null;
+  albumName: string | null;
 }
 
 interface PlaybackContextType {
   currentTrack: string | null;
   currentTrackName: string | null;
+  currentAlbumCover: string | null;
+  currentAlbumName: string | null;
   trackList: Track[];
   currentIndex: number;
-  setTrack: (url: string | null, name: string | null, index?: number) => void;
+  setTrack: (
+    url: string | null,
+    name: string | null,
+    albumCover: string | null,
+    albumName: string | null,
+    index?: number
+  ) => void;
   isPlaying: boolean;
   togglePlayPause: () => void;
   nextTrack: () => void;
@@ -27,6 +37,8 @@ export const PlaybackProvider = ({ children }: { children: ReactNode }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(-1);
   const [currentTrack, setCurrentTrack] = useState<string | null>(null);
   const [currentTrackName, setCurrentTrackName] = useState<string | null>(null);
+  const [currentAlbumCover, setCurrentAlbumCover] = useState<string | null>(null);
+  const [currentAlbumName, setCurrentAlbumName] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -34,7 +46,6 @@ export const PlaybackProvider = ({ children }: { children: ReactNode }) => {
     console.log(currentIndex);
   }, [currentIndex]);
 
-  // Fetch albums and set trackList
   React.useEffect(() => {
     getAllAlbums().then((albums) => {
       const tracks = albums
@@ -42,12 +53,20 @@ export const PlaybackProvider = ({ children }: { children: ReactNode }) => {
         .map((album) => ({
           url: album.firstSongUrl,
           name: album.firstSong,
+          albumCover: album.artworkUrl,
+          albumName: album.name,
         }));
       setTrackList(tracks);
     });
   }, []);
 
-  const playTrack = (url: string | null, name: string | null, index?: number) => {
+  const playTrack = (
+    url: string | null,
+    name: string | null,
+    albumCover: string | null,
+    albumName: string | null,
+    index?: number
+  ) => {
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.src = url || "";
@@ -59,11 +78,13 @@ export const PlaybackProvider = ({ children }: { children: ReactNode }) => {
         setIsPlaying(false);
       }
     }
-    setCurrentTrack(url);
-    setCurrentTrackName(name);
-
     index = trackList.findIndex((track) => track.url === url);
     setCurrentIndex(index);
+    setIsPlaying(true);
+    setCurrentTrack(url);
+    setCurrentTrackName(name);
+    setCurrentAlbumCover(albumCover);
+    setCurrentAlbumName(albumName);
   };
 
   const togglePlayPause = () => {
@@ -80,16 +101,18 @@ export const PlaybackProvider = ({ children }: { children: ReactNode }) => {
   const nextTrack = () => {
     if (trackList.length === 0) return;
     const nextIndex = (currentIndex + 1) % trackList.length;
-    playTrack(trackList[nextIndex].url, trackList[nextIndex].name, nextIndex);
+    const nextTrack = trackList[nextIndex];
+    playTrack(nextTrack.url, nextTrack.name, nextTrack.albumCover, nextTrack.albumName);
   };
 
   const prevTrack = () => {
     if (trackList.length === 0 || !audioRef.current) return;
     if (audioRef.current.currentTime > 3) {
-      audioRef.current.currentTime = 0; // Restart current track
+      audioRef.current.currentTime = 0;
     } else {
       const prevIndex = (currentIndex - 1 + trackList.length) % trackList.length;
-      playTrack(trackList[prevIndex].url, trackList[prevIndex].name, prevIndex);
+      const prevTrack = trackList[prevIndex];
+      playTrack(prevTrack.url, prevTrack.name, prevTrack.albumCover, prevTrack.albumName);
     }
   };
 
@@ -98,6 +121,8 @@ export const PlaybackProvider = ({ children }: { children: ReactNode }) => {
       value={{
         currentTrack,
         currentTrackName,
+        currentAlbumCover,
+        currentAlbumName,
         trackList,
         currentIndex,
         setTrack: playTrack,

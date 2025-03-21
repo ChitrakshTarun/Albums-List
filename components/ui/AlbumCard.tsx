@@ -32,7 +32,7 @@ export const AlbumCard = ({
           ? "flex flex-row gap-4 items-center bg-white/5 p-4 rounded-lg hover:bg-white/10 transition-colors duration-300"
           : "bg-white/5 rounded-lg overflow-hidden hover:bg-white/10 transition-colors duration-300"
       }`}
-      onClick={() => firstSongUrl && setTrack(firstSongUrl, firstSong)}
+      onClick={() => firstSongUrl && setTrack(firstSongUrl, firstSong, artworkUrl, name)}
     >
       {layout === "list" && (
         <div className="w-8 lg:w-16 text-xl text-center flex-shrink-0">
