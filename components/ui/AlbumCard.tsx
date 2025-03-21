@@ -1,5 +1,7 @@
+"use client";
 import Image from "next/image";
 import React from "react";
+import { usePlayback } from "@/providers/PlaybackProvider";
 
 interface AlbumCardProps {
   index?: number;
@@ -7,19 +9,30 @@ interface AlbumCardProps {
   artistName: string[];
   genreName: string[];
   artworkUrl: string;
+  firstSong: string | null;
+  firstSongUrl: string | null;
   layout?: "list" | "grid";
 }
 
-export const AlbumCard = ({ index, name, artistName, artworkUrl, layout = "list" }: AlbumCardProps) => {
+export const AlbumCard = ({
+  index,
+  name,
+  artistName,
+  artworkUrl,
+  firstSong,
+  firstSongUrl,
+  layout = "list",
+}: AlbumCardProps) => {
+  const { setTrack } = usePlayback();
+
   return (
     <div
-      className={`
-        ${
-          layout === "list"
-            ? "flex flex-row gap-4 items-center bg-white/5 p-4 rounded-lg hover:bg-white/10 transition-colors duration-300"
-            : "bg-white/5 rounded-lg overflow-hidden hover:bg-white/10 transition-colors duration-300"
-        }
-      `}
+      className={`cursor-pointer ${
+        layout === "list"
+          ? "flex flex-row gap-4 items-center bg-white/5 p-4 rounded-lg hover:bg-white/10 transition-colors duration-300"
+          : "bg-white/5 rounded-lg overflow-hidden hover:bg-white/10 transition-colors duration-300"
+      }`}
+      onClick={() => firstSongUrl && setTrack(firstSongUrl, firstSong, artworkUrl, name)}
     >
       {layout === "list" && (
         <div className="w-8 lg:w-16 text-xl text-center flex-shrink-0">
@@ -31,7 +44,7 @@ export const AlbumCard = ({ index, name, artistName, artworkUrl, layout = "list"
           src={artworkUrl}
           width={layout === "list" ? 50 : 300}
           height={layout === "list" ? 50 : 300}
-          alt={`Album cover for ${name} by ${artistName}`}
+          alt={`Cover art for ${name}`}
           className={layout === "list" ? "rounded-md" : "w-full h-full object-cover"}
         />
       </div>

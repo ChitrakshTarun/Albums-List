@@ -12,6 +12,8 @@ export const getAllAlbums = async () => {
       genreNames: albums.genreNames,
       releaseDate: albums.releaseDate,
       artworkUrl: albums.artworkUrl,
+      firstSong: albums.firstSong,
+      firstSongUrl: albums.firstSongUrl,
     })
     .from(albums)
     .orderBy(sql`lower(${albums.artistName}[1])`, asc(albums.releaseDate));

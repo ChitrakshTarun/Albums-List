@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "@/app/globals.css";
+import { PlaybackProvider } from "@/providers/PlaybackProvider";
 
 export const metadata: Metadata = {
   title: "Fevenir's Albums List",
@@ -13,7 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <PlaybackProvider>{children}</PlaybackProvider>
+      </body>
     </html>
   );
 }

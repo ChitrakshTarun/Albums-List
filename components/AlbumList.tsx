@@ -8,6 +8,7 @@ interface AlbumListProps {
 
 const AlbumList = async ({ layout = "list" }: AlbumListProps) => {
   const albums = await getAllAlbums();
+  console.log(albums);
 
   return (
     <div>
@@ -29,6 +30,8 @@ const AlbumList = async ({ layout = "list" }: AlbumListProps) => {
             artistName={album.artistName}
             genreName={album.genreNames}
             artworkUrl={album.artworkUrl!}
+            firstSong={album.firstSong}
+            firstSongUrl={album.firstSongUrl}
             layout={layout}
           />
         ))}
