@@ -44,7 +44,7 @@ export const AlbumCard = ({
           src={artworkUrl}
           width={layout === "list" ? 50 : 300}
           height={layout === "list" ? 50 : 300}
-          alt={`Album cover for ${name} by ${artistName.join(", ")}`}
+          alt={`Cover art for ${name}`}
           className={layout === "list" ? "rounded-md" : "w-full h-full object-cover"}
         />
       </div>

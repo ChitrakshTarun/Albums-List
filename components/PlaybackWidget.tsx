@@ -100,7 +100,7 @@ export default function PlaybackWidget() {
                 <motion.div layout>
                   <Image
                     src={currentAlbumCover}
-                    alt="Album Cover"
+                    alt={`Cover art for ${currentAlbumName}`}
                     height={50}
                     width={50}
                     className="rounded-lg shadow-md"
