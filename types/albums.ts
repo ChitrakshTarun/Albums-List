@@ -22,4 +22,6 @@ export type Album = {
   is_single: boolean;
   is_compilation: boolean;
   is_complete: boolean;
+  first_song: string | null;
+  first_song_url: string | null;
 };
