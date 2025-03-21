@@ -24,6 +24,8 @@ export const albums = pgTable("albums", {
   isSingle: boolean("is_single"),
   isCompilation: boolean("is_compilation"),
   isComplete: boolean("is_complete"),
+  firstSong: varchar("first_song", { length: 255 }),
+  firstSongUrl: text("first_song_url"),
 });
 
 export const perfectAlbums = pgTable(
